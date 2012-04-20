@@ -1,0 +1,17 @@
+Revision history for DateTimeX-Web
+
+0.04 2008/08/17
+  - added (from|for)_http
+  - support formats without 'new'
+
+0.03 2008/07/09
+  - added (from|for)_rss20 as an alias for (from|for)_mail
+  - a bit more robust isa handling
+  - constructors get looser and accept array/hash references now
+
+0.02 2008/07/05
+  - slightly better error handling (no more misguiding isa errors)
+  - updated MANIFEST to add tests that were only in the repository
+
+0.01 2008/02/28
+  - initial release
