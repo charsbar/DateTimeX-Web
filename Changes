@@ -1,5 +1,8 @@
 Revision history for DateTimeX-Web
 
+0.05 2012/04/20
+  - added some constructors. today, last_day_of_month, from_day_of_year and from_object. (BOKUTIN++)
+
 0.04 2008/08/17
   - added (from|for)_http
   - support formats without 'new'

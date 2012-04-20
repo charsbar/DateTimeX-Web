@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use DateTime;
 use DateTime::Locale;
@@ -96,16 +96,24 @@ sub locale {
   $self->{config}->{locale};
 }
 
-sub now {
-  my $self = shift;
+{
+    my @constructors = qw(now today last_day_of_month from_day_of_year);
+    for my $method (@constructors) {
+        my $code = sub {
+            my $self = shift;
 
-  my %options = $self->_parse_options(@_);
+            my %options = $self->_parse_options(@_);
 
-  $self->_merge_config( \%options );
+            $self->_merge_config( \%options );
 
-  my $dt = eval { DateTime->now( %options ) };
-  $self->_error( $@ ) if $@;
-  return $dt;
+            my $dt = eval { DateTime->$method( %options ) };
+            $self->_error( $@ ) if $@;
+            return $dt;
+        };
+
+        no strict 'refs';
+        *{$method} = $code;
+    }
 }
 
 sub from {
@@ -114,6 +122,7 @@ sub from {
   my %options = $self->_parse_options(@_);
 
   return $self->from_epoch( %options ) if $options{epoch};
+  return $self->from_object( %options ) if $options{object};
 
   $self->_merge_config( \%options );
 
@@ -132,6 +141,32 @@ sub from_epoch {
 
   my $dt = eval { DateTime->from_epoch( epoch => $epoch, %options ) };
   $self->_error( $@ ) if $@;
+
+  return $dt;
+}
+
+sub from_object {
+  my $self  = shift;
+  my $object = shift;
+     $object = shift if $object eq 'object';
+  my %options = $self->_parse_options(@_);
+
+  $self->_merge_config( \%options );
+
+  my $orig_time_zone;
+  if (my $time_zone = delete $options{time_zone}) {
+      if ($object->can('set_time_zone')) {
+          $orig_time_zone = $object->time_zone;
+          $object->set_time_zone($time_zone);
+      }
+  }
+
+  my $dt = eval { DateTime->from_object( object => $object, %options ) };
+  $self->_error( $@ ) if $@;
+
+  if ($orig_time_zone) {
+      $object->set_time_zone($orig_time_zone);
+  }
 
   return $dt;
 }
@@ -326,7 +361,7 @@ returns the current time zone/locale object of the factory, which would be passe
 
 =head1 METHODS TO GET A DATETIME OBJECT
 
-=head2 now, from_epoch
+=head2 now, today, from_epoch, from_object, from_day_of_year, last_day_of_month
 
 returns a DateTime object as you expect.
 
