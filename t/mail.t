@@ -39,5 +39,5 @@ my $mail_datetime = "Mon, 10 Mar 2003 15:49:17 -0000";
 
 {
   my $str = $dtx->for_mail( %args );
-  is $str => $mail_datetime;
+  like $str => qr/^Mon, 10 Mar 2003 15:49:17 [+-]0000$/;
 }
