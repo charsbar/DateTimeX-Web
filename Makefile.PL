@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
-WriteMakefile(
+my %params = (
   NAME          => 'DateTimeX::Web',
   AUTHOR        => 'Kenichi Ishigaki <ishigaki@cpan.org>',
   VERSION_FROM  => 'lib/DateTimeX/Web.pm',
@@ -20,8 +20,16 @@ WriteMakefile(
     'Test::More'                 => '0.47',
     'Test::UseAllModules'        => '0.09',
   },
-  ($ExtUtils::MakeMaker::VERSION >= 6.31
-    ? ( LICENSE => 'perl' )
-    : ()
-  ),
+  LICENSE => 'perl',
+  META_MERGE => {
+    resources => {
+      repository => 'https://github.com/charsbar/DateTimeX-Web',
+    },
+  },
 );
+
+my $eumm = eval $ExtUtils::MakeMaker::VERSION;
+delete $params{LICENSE}    if $eumm < 6.31;
+delete $params{META_MERGE} if $eumm < 6.46;
+
+WriteMakefile(%params);
