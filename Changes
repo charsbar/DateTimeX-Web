@@ -1,5 +1,8 @@
 Revision history for DateTimeX-Web
 
+0.06 2015/03/30
+  - fixed a test to support newer DateTime::Format::Mail (SREZIC++)
+
 0.05 2012/04/20
   - added some constructors. today, last_day_of_month, from_day_of_year and from_object. (BOKUTIN++)
 
