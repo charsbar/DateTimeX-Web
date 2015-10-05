@@ -9,11 +9,11 @@ use DateTimeX::Web;
   ok $dtx->time_zone->isa('DateTime::TimeZone');
   is $dtx->time_zone->name => 'UTC';
 
-  is $dtx->locale->id => 'en-US';
+  like $dtx->locale->id => qr/^en[_-]US$/i;
 
   my $dt = $dtx->now;
   is $dt->time_zone->name => 'UTC';
-  is $dt->locale->id      => 'en-US';
+  like $dt->locale->id    => qr/^en[_-]US$/i;
 }
 
 { # let's replace the time_zone and the locale (with other objects)
