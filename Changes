@@ -1,5 +1,8 @@
 Revision history for DateTimeX-Web
 
+  - fixed tests and code to work with upcoming DateTime::Locale (currently in
+    trial releases) (DROLSKY++)
+
 0.06 2015/03/30
   - fixed a test to support newer DateTime::Format::Mail (SREZIC++)
 

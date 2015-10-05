@@ -9,12 +9,11 @@ use DateTimeX::Web;
   ok $dtx->time_zone->isa('DateTime::TimeZone');
   is $dtx->time_zone->name => 'UTC';
 
-  ok $dtx->locale->isa('DateTime::Locale::root');
-  is $dtx->locale->name => 'English';
+  is $dtx->locale->id => 'en-US';
 
   my $dt = $dtx->now;
   is $dt->time_zone->name => 'UTC';
-  is $dt->locale->name    => 'English';
+  is $dt->locale->id      => 'en-US';
 }
 
 { # let's replace the time_zone and the locale (with other objects)
@@ -25,8 +24,7 @@ use DateTimeX::Web;
   is $dtx->time_zone->name => 'Asia/Tokyo';
 
   $dtx->locale(DateTime::Locale->load('ja'));
-  ok $dtx->locale->isa('DateTime::Locale::ja');
-  is $dtx->locale->name => 'Japanese';
+  is $dtx->locale->id => 'ja';
 
   my $dt = $dtx->now;
   is $dt->time_zone->name => 'Asia/Tokyo';
@@ -41,8 +39,7 @@ use DateTimeX::Web;
   is $dtx->time_zone->name => 'Asia/Tokyo';
 
   $dtx->locale('ja');
-  ok $dtx->locale->isa('DateTime::Locale::ja');
-  is $dtx->locale->name => 'Japanese';
+  is $dtx->locale->id => 'ja';
 
   my $dt = $dtx->now;
   is $dt->time_zone->name => 'Asia/Tokyo';
@@ -75,18 +72,18 @@ use DateTimeX::Web;
 
 { # provide a default locale
   my $dtx = DateTimeX::Web->new( locale => 'ja' );
-  is $dtx->locale->name => 'Japanese';
+  is $dtx->locale->id => 'ja';
 
   my $dt = $dtx->now;
-  is $dt->locale->name => 'Japanese';
+  is $dt->locale->id => 'ja';
 }
 
 { # should accept a locale object, too.
   my $dtx = DateTimeX::Web->new( locale => DateTime::Locale->load('ja') );
-  is $dtx->locale->name => 'Japanese';
+  is $dtx->locale->id => 'ja';
 
   my $dt = $dtx->now;
-  is $dt->locale->name => 'Japanese';
+  is $dt->locale->id => 'ja';
 }
 
 { # you can pass a hash reference
@@ -95,8 +92,7 @@ use DateTimeX::Web;
   ok $dtx->time_zone->isa('DateTime::TimeZone');
   is $dtx->time_zone->name => 'Asia/Tokyo';
 
-  ok $dtx->locale->isa('DateTime::Locale::ja');
-  is $dtx->locale->name => 'Japanese';
+  is $dtx->locale->id => 'ja';
 
   my $dt = $dtx->now;
   is $dt->time_zone->name => 'Asia/Tokyo';

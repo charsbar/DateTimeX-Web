@@ -46,7 +46,7 @@ sub new {
   }, $class;
 
   $self->time_zone( $config{time_zone} || delete $config{timezone} || 'UTC' );
-  $self->locale( $config{locale} || 'en_us' );
+  $self->locale( $config{locale} || 'en-US' );
 
   $self;
 }
@@ -89,7 +89,7 @@ sub locale {
 
   if ( $locale ) {
     $self->{config}->{locale} =
-      ( blessed $locale && $locale->isa('DateTime::Locale::root') ) 
+      ( blessed $locale && ($locale->isa('DateTime::Locale::root') || $locale->isa('DateTime::Locale::FromData') ) ) 
         ? $locale
         : DateTime::Locale->load( $locale );
   }
