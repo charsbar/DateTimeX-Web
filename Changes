@@ -1,5 +1,6 @@
 Revision history for DateTimeX-Web
 
+0.07 2015/10/05
   - fixed tests and code to work with upcoming DateTime::Locale (currently in
     trial releases) (DROLSKY++)
 
