@@ -38,12 +38,11 @@ ok !$@;  # As of 0.03, constructors get looser
 
 eval { $dtx->time_zone( { } ) };
 
-ok $@ =~ /not one of the allowed types/, $@;
+ok $@ =~ /(?:not one of the allowed types|Validation failed for type)/, $@;
 
 eval { $dtx->locale( { } ) };
 
-ok $@ =~ /not one of the allowed types/, $@;
-
+ok $@ =~ /(?:not one of the allowed types|Validation failed for type)/, $@;
 
 eval { $dtx->_datetime( [ epoch => 123456 ] ) };
 
@@ -55,9 +54,8 @@ ok !$@;  # As of 0.03, constructors get looser
 
 eval { $dtx->time_zone( [ ] ) };
 
-ok $@ =~ /not one of the allowed types/, $@;
+ok $@ =~ /(?:not one of the allowed types|Validation failed for type)/, $@;
 
 eval { $dtx->locale( [ ] ) };
 
-ok $@ =~ /not one of the allowed types/, $@;
-
+ok $@ =~ /(?:not one of the allowed types|Validation failed for type)/, $@;
