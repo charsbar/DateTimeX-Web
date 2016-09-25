@@ -1,0 +1,18 @@
+language: perl
+perl:
+  - "5.8"
+  - "5.10"
+  - "5.12"
+  - "5.14"
+  - "5.16"
+  - "5.18"
+  - "5.20"
+  - "5.22"
+env:
+  - PRE_SPECIO=
+matrix:
+  include:
+    - perl: 5.8
+      env: PRE_SPECIO=1
+before_install:
+  - test $PRE_SPECIO && cpanm -n DateTime@1.35 DateTime::TimeZone@2.01 DateTime::Locale@1.05 || cpanm -n DateTime DateTime::TimeZone DateTime::Locale
